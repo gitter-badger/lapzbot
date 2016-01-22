@@ -5,7 +5,6 @@ lapzbot is a multi-purpose utility bot that I wrote for my discord server `osu! 
 * Fun games- Number guess, Trivia quiz, 8ball
 * Awesome chat emotes
 * Osu related functions- user stats & user top plays
-If you want to use this bot, go ahead and use it. I will try to keep it as updated as possible.
 
 Join my [lapzbothelp Discord Server](https://discord.gg/0lzW6jSQESAO1HSU) to get latest updates/ help/ bugfixes etc on lapzbot.
 
