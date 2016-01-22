@@ -1,6 +1,11 @@
 ![lapzbot](http://i.imgur.com/txlWePx.png)
 ### What is lapzbot?
-lapzbot is a multi-purpose utility bot that I wrote for my discord server `osu! India`. Needless to say the functions I have created are designed keeping the osu crowd in mind. If you want to use this bot, go ahead and use it. I will try to keep it as updated as possible.
+lapzbot is a multi-purpose utility bot that I wrote for my discord server `osu! India`. Its a nifty little utility bot. Some of its features include :
+* Playing music- both local files and online songs
+* Fun games- Number guess, Trivia quiz, 8ball
+* Awesome chat emotes
+* Osu related functions- user stats & user top plays
+If you want to use this bot, go ahead and use it. I will try to keep it as updated as possible.
 
 Join my [lapzbothelp Discord Server](https://discord.gg/0lzW6jSQESAO1HSU) to get latest updates/ help/ bugfixes etc on lapzbot.
 
