@@ -1,5 +1,4 @@
 import requests
-import json
 import yaml
 import time
 import bs4
