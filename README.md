@@ -1,5 +1,6 @@
 ![lapzbot](http://i.imgur.com/txlWePx.png)
 
+[![ReviewNinja](https://app.review.ninja/49250931/badge)](https://app.review.ninja/lapoozza/lapzbot)
 [![Code Issues](https://www.quantifiedcode.com/api/v1/project/27aa17781b5a40debf850b1c96fcd1a4/badge.svg)](https://www.quantifiedcode.com/app/project/27aa17781b5a40debf850b1c96fcd1a4)
 ### What is lapzbot?
 lapzbot is a multi-purpose utility bot that I wrote for my discord server `osu! India`. Its a nifty little utility bot. Some of its features include :
