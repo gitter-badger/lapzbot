@@ -1,4 +1,6 @@
 ![lapzbot](http://i.imgur.com/txlWePx.png)
+
+[![ReviewNinja](https://app.review.ninja/49250931/badge)](https://app.review.ninja/lapoozza/lapzbot)
 ### What is lapzbot?
 lapzbot is a multi-purpose utility bot that I wrote for my discord server `osu! India`. Its a nifty little utility bot. Some of its features include :
 * Playing music- both local files and online songs
