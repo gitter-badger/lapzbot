@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block body %}
+    <style>
+        ul.console{list-style-type: none;}
+    </style>
+    <h2>Interactive console</h2>
+    <form action="{{ url_for('logged') }}" method=post>
+        <fieldset>
+            <legend>Message channels by channel_id</legend>
+            <i>Use this to send message to any channel (specified by the channel_id) to which the bot has permission.</i>
+            <ul class="console">
+                <li><label for=msg>Message</label></li>
+                <li><input type=text name=msg /><li>
+                <br>
+                <li><label for=chnl>Channel id</label></li>
+                <li><input type=text name=chnl /><li>
+                <br>
+                <br>
+                <input type=submit value=SEND />
+            </ul>
+        </fieldset>
+    </form>
+    <fieldset>
+        <legend>Moderation Tools</legend>
+        <ul class="console">
+            <li><input type=submit name=msg_list value="Get server list" /></li>
+            <br>
+            <li><input type=submit name=chnl_list value="Get channel list" /></li>
+            <br>
+            <li><input type=submit name=uptime value="Uptime" /></li>
+            <br>
+            <li><input type=submit name=accept_invite value="Accept discord invite" /></li>
+
+        </ul>
+    </fieldset>
+
+{% endblock %}

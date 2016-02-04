@@ -1,6 +1,6 @@
+youtube_dl
+flask
 beautifulsoup4==4.4.1
 git+https://github.com/Rapptz/discord.py@async#egg=discord.py>=0.10.0
-PyYAML==3.11
 requests==2.9.1
 win-unicode-console==0.4
-youtube-dl>=2016.1.9

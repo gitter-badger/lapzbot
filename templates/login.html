@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block body %}
+    <style>
+        ul.login{list-style-type: none;}
+    </style>
+    <h3>Login</h3>
+    {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+    <p>Read this wiki for a detailed explanation: <a href="https://github.com/lapoozza/lapzbot/wiki/How-to-setup-config.yaml%3F">WIKI</a> </p>
+    <form action="{{ url_for('login') }}" method=post>
+        <ul class="login">
+            <li><label for=email>Discord email-id:</label></li>
+            <li><input type=text name=email /></li>
+            <br>
+            <li><label for=password>Discord password:</label></li>
+            <li><input type=text name=password /></li>
+            <br>
+            <li><label for=prefix>Command prefix:</label></li>
+            <li><input type=text name=prefix /></li>
+            <br>
+            <li><label for=osu_key>OSU API Key:</label></li>
+            <li><input type=text name=osu_key /></li>
+            <br>
+            <li><label for=help_id>Help Channel Id:</label></li>
+            <li><input type=text name=help_id /></li>
+            <br>
+            <br>
+            <li><input type=submit value=Login /></li>
+        </ul>
+    </form>
+{% endblock %}
