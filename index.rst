@@ -11,21 +11,21 @@ Contents:
 .. toctree::
    :maxdepth: 2
 .. automodule:: lapzbot
-    :members:
+   :members:
 .. automodule:: run_lapzbot
-    :members:
+   :members:
 .. automodule:: musicplayer
-    :members:
+   :members:
 .. automodule:: osu
-    :members:
+   :members:
 .. automodule:: guessgame
-    :members:
+   :members:
 .. automodule:: chatemotes
-    :members:
+   :members:
 .. automodule:: triviagame
-    :members:
+   :members:
 .. automodule:: eightball
-    :members:
+   :members:
 
 
 Indices and tables
