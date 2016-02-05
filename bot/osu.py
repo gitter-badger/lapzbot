@@ -24,8 +24,8 @@ def stats(instring):
     try:
         for player in data:
             op = str('https://a.ppy.sh/' + player['user_id'] + '\nUsername : ' + player['username']
-                     + '\nPerformance Points : ' + "%.2f" % float(player['pp_raw']) + '\nAccuracy : '
-                     + "%.2f" % float(player['accuracy']) + '\nPlaycount : ' + player['playcount']
+                     + '\nPerformance Points : ' + "{0:.2f}".format(float(player['pp_raw'])) + '\nAccuracy : '
+                     + "{0:.2f}".format(float(player['accuracy'])) + '\nPlaycount : ' + player['playcount']
                      + '\nProfile Link : `osu.ppy.sh/u/' + player['user_id'] + '`')
             result = op
         return result
@@ -59,11 +59,11 @@ def top(instring):
             tits = html.title.text
             msg += str(
                     'Beatmap : ' + tits + ' `osu.ppy.sh/b/' + player[
-                        'beatmap_id'] + '`' + '\n Acc : ' + "%.2f" % float(
-                            acc) + ' | ' + 'Rank : ' + player['rank'] + ' | ' + 'PP : ' + player['pp'] + '\n')
+                        'beatmap_id'] + '`' + '\n Acc : ' + "{0:.2f}".format(float(
+                            acc)) + ' | ' + 'Rank : ' + player['rank'] + ' | ' + 'PP : ' + player['pp'] + '\n')
 
-        result = str(msg + '\nThis request took `' + "%.2f" % (
-            time.time() - start_time) + ' seconds` to process.')
+        result = str(msg + '\nThis request took `' + "{0:.2f}".format((
+            time.time() - start_time)) + ' seconds` to process.')
 
         return result
         # NOTE:- if the result is 'string indices must be integers' that means the API key is wrong
