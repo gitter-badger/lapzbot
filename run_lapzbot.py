@@ -47,7 +47,7 @@ botle = lapzbot.Bot()
 loop = asyncio.get_event_loop()
 
 OPUS_DIR = 'libopus'
-OPUS_LIB_NAME = 'libopus-0.x86.dll'
+OPUS_LIB_NAME = 'libopus-0.dll'
 
 try:
     if not discord.opus.is_loaded():
