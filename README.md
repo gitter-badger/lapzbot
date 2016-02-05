@@ -1,6 +1,6 @@
 ![lapzbot](http://i.imgur.com/txlWePx.png)
 
-[![Documentation Status](https://readthedocs.org/projects/lapzbot/badge/?version=flaskdev)](http://http://lapzbot.readthedocs.org/en/flaskdev/index.html)
+[![Documentation Status](https://readthedocs.org/projects/lapzbot/badge/?version=flaskdev)](http://lapzbot.readthedocs.org/en/flaskdev/index.html)
 [![ReviewNinja](https://app.review.ninja/49250931/badge)](https://app.review.ninja/lapoozza/lapzbot)
 [![Requirements Status](https://requires.io/github/lapoozza/lapzbot/requirements.svg?branch=master)](https://requires.io/github/lapoozza/lapzbot/requirements/?branch=master)
 [![Code Issues](https://www.quantifiedcode.com/api/v1/project/27aa17781b5a40debf850b1c96fcd1a4/snapshot/origin:flaskdev:HEAD/badge.svg)](https://www.quantifiedcode.com/app/project/27aa17781b5a40debf850b1c96fcd1a4)
