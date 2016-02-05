@@ -22,8 +22,10 @@
 # SOFTWARE.
 #
 
-
+from __future__ import unicode_literals
 import random
+import asyncio
+
 
 responses = [
     "It is certain",
@@ -49,7 +51,8 @@ responses = [
 ]
 
 
-async def main(self, message):
+@asyncio.coroutine
+def main(self, message):
     """
     8ball game. Ask any question to lapzbot and it gives a randomly selected answer is given.
 
@@ -64,5 +67,5 @@ async def main(self, message):
     """
     maxnum = len(responses) - 1
     rand = random.randint(0, maxnum)
-    await self.send_message(message.channel, responses[rand])
+    yield from self.send_message(message.channel, responses[rand])
 

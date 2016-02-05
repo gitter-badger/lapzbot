@@ -23,6 +23,7 @@
 #
 
 
+from __future__ import unicode_literals
 import discord
 import osu
 import guessgame
@@ -30,6 +31,7 @@ import triviagame
 import chatemotes
 import eightball
 import musicplayer
+import asyncio
 
 
 class Bot(discord.Client):
@@ -47,69 +49,72 @@ class Bot(discord.Client):
         self.current = None
         self.player = None
 
-    async def on_message(self, message):
+    @asyncio.coroutine
+    def on_message(self, message):
         if message.author == self.user:
             return
 
         if message.content.startswith(self.prefix + 'help'):
             help_channel = self.hchid
             # NOTE:- If help channel id is wrong then discord will display it as #deleted-channel
-            await self.send_message(message.channel,
-                                    'Hello {}'.format(message.author.mention) + ', please visit <#' + help_channel +
-                                    '> for a complete list of commands')
+            yield from self.send_message(message.channel,
+                                         'Hello {}'.format(
+                                             message.author.mention) + ', please visit <#' + help_channel +
+                                         '> for a complete list of commands')
 
-        await chatemotes.main(self, message, self.prefix)
+        yield from chatemotes.main(self, message, self.prefix)
 
         # MUSIC PLAYER---------------
 
         if message.content.startswith(self.prefix + 'load'):
-            await musicplayer.load(self, message)
+            yield from musicplayer.load(self, message)
 
         if message.content.startswith(self.prefix + 'play '):
-            await musicplayer.play(self, message)
+            yield from musicplayer.play(self, message)
 
         if message.content.startswith(self.prefix + 'pause'):
-            await musicplayer.pause(self, message)
+            yield from musicplayer.pause(self, message)
 
         if message.content.startswith(self.prefix + 'resume'):
-            await musicplayer.resume(self, message)
+            yield from musicplayer.resume(self, message)
 
         if message.content.startswith(self.prefix + 'stop'):
-            await musicplayer.stop(self, message)
+            yield from musicplayer.stop(self, message)
 
         if message.content.startswith(self.prefix + 'playlist'):
-            await musicplayer.playlist(self, message)
+            yield from musicplayer.playlist(self, message)
 
         # Music player ends here-----------
 
         if message.content.startswith(self.prefix + 'guess'):
             now_playing = discord.Game(name='Guessing Game')
-            await self.change_status(game=now_playing, idle=False)
-            await guessgame.guess(self, message)
+            yield from self.change_status(game=now_playing, idle=False)
+            yield from guessgame.guess(self, message)
             now_playing = discord.Game(name='')
-            await self.change_status(game=now_playing, idle=False)
+            yield from self.change_status(game=now_playing, idle=False)
 
         if message.content.startswith(self.prefix + 'quiz'):
             now_playing = discord.Game(name='Trivia Quiz')
-            await self.change_status(game=now_playing, idle=False)
-            await triviagame.quiz(self, message)
+            yield from self.change_status(game=now_playing, idle=False)
+            yield from triviagame.quiz(self, message)
             now_playing = discord.Game(name='')
-            await self.change_status(game=now_playing, idle=False)
+            yield from self.change_status(game=now_playing, idle=False)
 
         if message.content.startswith(self.prefix + 'stats'):
             my_string = message.content
-            await self.send_message(message.channel, osu.stats(my_string, self.key))
+            yield from self.send_message(message.channel, osu.stats(my_string, self.key))
 
         if message.content.startswith(self.prefix + 'top'):
             my_string = message.content
-            await self.send_message(message.channel,
-                                    'Fetching the requested data. Please wait...\n\n')
-            await self.send_message(message.channel, osu.top(my_string, self.key))
+            yield from self.send_message(message.channel,
+                                         'Fetching the requested data. Please wait...\n\n')
+            yield from self.send_message(message.channel, osu.top(my_string, self.key))
 
         if message.content.startswith(self.prefix + '8ball'):
-            await eightball.main(self, message)
+            yield from eightball.main(self, message)
 
-    async def on_ready(self):
+    @asyncio.coroutine
+    def on_ready(self):
         """
         This function is called once lapzbot logs in to discord and its Server list
         is populated.
@@ -123,4 +128,4 @@ class Bot(discord.Client):
         print('------')
         # Game Status updating
         now_playing = discord.Game(name='type ' + self.prefix + 'help for help')
-        await self.change_status(game=now_playing, idle=False)
+        yield from self.change_status(game=now_playing, idle=False)

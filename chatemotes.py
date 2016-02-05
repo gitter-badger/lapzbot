@@ -22,8 +22,12 @@
 # SOFTWARE.
 #
 
+from __future__ import unicode_literals
+import asyncio
 
-async def main(self, message, prefix):
+
+@asyncio.coroutine
+def main(self, message, prefix):
     """
     Chat emoticons that are displayed inside lapzbot.
 
@@ -39,13 +43,13 @@ async def main(self, message, prefix):
     :rtype: png
     """
     if message.content.startswith(prefix+'kappa'):
-        await self.send_message(message.channel, 'http://i.imgur.com/N5RzfBB.png')
+        yield from self.send_message(message.channel, 'http://i.imgur.com/N5RzfBB.png')
 
     if message.content.startswith(prefix+'feelsbadman'):
-        await self.send_message(message.channel, 'http://i.imgur.com/DfURIfh.png')
+        yield from self.send_message(message.channel, 'http://i.imgur.com/DfURIfh.png')
 
     if message.content.startswith(prefix+'feelsgoodman'):
-        await self.send_message(message.channel, 'http://i.imgur.com/9Ggf2vs.png')
+        yield from self.send_message(message.channel, 'http://i.imgur.com/9Ggf2vs.png')
 
     if message.content.startswith(prefix+'lapz'):
-        await self.send_message(message.channel, 'http://i.imgur.com/I0Lqf3w.png')
+        yield from self.send_message(message.channel, 'http://i.imgur.com/I0Lqf3w.png')

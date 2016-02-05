@@ -31,7 +31,7 @@ import subprocess as sp
 import discord
 import youtube_dl
 import os
-
+import asyncio
 
 save_dir = 'audio_dl_caches'
 
@@ -49,7 +49,8 @@ def make_save_path(title, savedir=save_dir):
     return os.path.join(savedir, '%s.mp3' % title)
 
 
-async def load(self, message):
+@asyncio.coroutine
+def load(self, message):
     """
     This function is called when the user uses `load` command.
 
@@ -60,18 +61,18 @@ async def load(self, message):
     :type self: discord.Client()
     :type message: discord.Message()
     """
-    await self.send_message(message.channel, 'Hooked to the voice channel. Please wait while'
-                                             ' I populate the list of songs.')
+    yield from self.send_message(message.channel, 'Hooked to the voice channel. Please wait while'
+                                                  ' I populate the list of songs.')
 
     global s_playlist
     global voice_stream
 
     if self.is_voice_connected():
-        await self.send_message(message.channel,
-                                '```Discord API doesnt let me join multiple servers at the moment.```')
+        yield from self.send_message(message.channel,
+                                     '```Discord API doesnt let me join multiple servers at the moment.```')
 
     else:
-        voice_stream = await self.join_voice_channel(message.author.voice_channel)
+        voice_stream = yield from self.join_voice_channel(message.author.voice_channel)
 
     # TODO get a better way to store local playlist
     try:
@@ -98,23 +99,23 @@ async def load(self, message):
                     title = op_json['format']['tags']['title']
                     artist = op_json['format']['tags']['artist']
 
-                    await self.send_message(message.channel,
-                                            title + ' - ' + artist + ' (code: **' + str(ids) + '**)')
+                    yield from self.send_message(message.channel,
+                                                 title + ' - ' + artist + ' (code: **' + str(ids) + '**)')
                     s_playlist.append(ids)
                     s_playlist.append(title + ' - ' + artist)
                 except LookupError:
                     head, tail = os.path.split(a)
                     filename = os.path.splitext(tail)[0]
-                    await self.send_message(message.channel,
-                                            filename + ' (code: **' + str(ids) + '**)')
+                    yield from self.send_message(message.channel,
+                                                 filename + ' (code: **' + str(ids) + '**)')
                     s_playlist.append(ids)
                     s_playlist.append(filename)
 
             except Exception as e:
                 print(str(e))
     except FileExistsError as e:
-        await self.send_message(message.channel,
-                                '``' + str(e) + '```')
+        yield from self.send_message(message.channel,
+                                     '``' + str(e) + '```')
 
     s_playlist_dict = dict(s_playlist[i:i + 2] for i in range(0, len(s_playlist), 2))
     with open('playListInfo.yaml', 'w') as f2:
@@ -125,7 +126,8 @@ async def load(self, message):
     s_dict = dict(s_list[i:i + 2] for i in range(0, len(s_list), 2))
 
 
-async def play(self, message):
+@asyncio.coroutine
+def play(self, message):
     """
     This function is called when the player uses `play` command
 
@@ -138,8 +140,8 @@ async def play(self, message):
     """
     try:
         if self.player is not None and self.player.is_playing():
-            await self.send_message(message.channel, '```Already playing a song.' +
-                                    ' Your current request is queued.```')
+            yield from self.send_message(message.channel, '```Already playing a song.' +
+                                         ' Your current request is queued.```')
             return
         else:
             my_string = message.content
@@ -150,7 +152,7 @@ async def play(self, message):
             if second.isdigit():
                 second_int = int(second)
                 # self.play_next_song.clear()
-                # self.current = await self.songs.get()
+                # self.current = yield from self.songs.get()
                 self.player = self.voice.create_ffmpeg_player(str(s_dict[second_int]))
 
                 # FFProbing for info
@@ -168,11 +170,11 @@ async def play(self, message):
                     h, m = divmod(m, 60)
                     print('title:', title)
                     print('artist:', artist)
-                    await self.send_message(message.channel, 'Currently playing **' + title + ' - ' + artist +
-                                            '**. Song duration is **%d:%02d:%02d' % (h, m, s) + '**.')
+                    yield from self.send_message(message.channel, 'Currently playing **' + title + ' - ' + artist +
+                                                 '**. Song duration is **%d:%02d:%02d' % (h, m, s) + '**.')
                     # Game Status updating
                     now_playing = discord.Game(name=title)
-                    await self.change_status(game=now_playing, idle=False)
+                    yield from self.change_status(game=now_playing, idle=False)
                 except LookupError:
                     file_name = str(s_dict[second_int])
                     head, tail = os.path.split(file_name)
@@ -181,14 +183,14 @@ async def play(self, message):
                     seconds = float(leng)
                     m, s = divmod(seconds, 60)
                     h, m = divmod(m, 60)
-                    await self.send_message(message.channel, 'Currently playing **' + filename +
-                                            '**. Song duration is **%d:%02d:%02d' % (h, m, s) + '**.')
+                    yield from self.send_message(message.channel, 'Currently playing **' + filename +
+                                                 '**. Song duration is **%d:%02d:%02d' % (h, m, s) + '**.')
                     # Game Status updating
                     now_playing = discord.Game(name=filename)
-                    await self.change_status(game=now_playing, idle=False)
+                    yield from self.change_status(game=now_playing, idle=False)
 
                 self.player.start()
-                # await self.play_next_song.wait()
+                # yield from self.play_next_song.wait()
 
             # if play parameter is not a digit then we will treat it as a url
             else:
@@ -205,7 +207,7 @@ async def play(self, message):
                                        'no_warnings': False}
                 ydl = youtube_dl.YoutubeDL(ytdl_format_options)
 
-                await self.send_message(message.channel, '```Downloading the requested song...```')
+                yield from self.send_message(message.channel, '```Downloading the requested song...```')
 
                 with ydl:
                     try:
@@ -223,11 +225,11 @@ async def play(self, message):
 
                         # Move the temporary file to it's final location.
                         os.rename(result['id'], savepath)
-                        await self.send_message(message.channel, '``` Song download and conversion successful.' +
-                                                '```')
+                        yield from self.send_message(message.channel, '``` Song download and conversion successful.' +
+                                                     '```')
 
                     except Exception as e:
-                        await self.send_message(message.channel, '```' + str(e) + '```')
+                        yield from self.send_message(message.channel, '```' + str(e) + '```')
 
                 try:
                     self.player = self.voice.create_ffmpeg_player(savepath)
@@ -243,24 +245,25 @@ async def play(self, message):
                     seconds = float(leng)
                     m, s = divmod(seconds, 60)
                     h, m = divmod(m, 60)
-                    await self.send_message(message.channel, 'Currently playing **' + filename +
-                                            '**. Song duration is **%d:%02d:%02d' % (h, m, s) + '**.')
+                    yield from self.send_message(message.channel, 'Currently playing **' + filename +
+                                                 '**. Song duration is **%d:%02d:%02d' % (h, m, s) + '**.')
 
                     print(filename)
                     # Game Status updating
                     now_playing = discord.Game(name=filename)
-                    await self.change_status(game=now_playing, idle=False)
+                    yield from self.change_status(game=now_playing, idle=False)
 
                     self.player.start()
                 except Exception as e:
-                    await self.send_message(message.channel, '```' + str(e) + '```')
+                    yield from self.send_message(message.channel, '```' + str(e) + '```')
 
     except Exception as e:
-        await self.send_message(message.channel,
-                                '```' + str(e) + '```')
+        yield from self.send_message(message.channel,
+                                     '```' + str(e) + '```')
 
 
-async def pause(self, message):
+@asyncio.coroutine
+def pause(self, message):
     """
     This function is called when the player uses `pause` command.
 
@@ -273,19 +276,20 @@ async def pause(self, message):
     """
     try:
         if not self.is_voice_connected():
-            await self.send_message(message.channel, '```Please connect to voice channel first```')
+            yield from self.send_message(message.channel, '```Please connect to voice channel first```')
 
         if self.player.is_playing() == True and self.player.is_done() == False:
-            await self.send_message(message.channel, 'Paused')
+            yield from self.send_message(message.channel, 'Paused')
 
             self.player.pause()
 
     except Exception as e:
-        await self.send_message(message.channel,
-                                '```' + str(e) + '```')
+        yield from self.send_message(message.channel,
+                                     '```' + str(e) + '```')
 
 
-async def resume(self, message):
+@asyncio.coroutine
+def resume(self, message):
     """
     This function is called when the player uses `resume` command.
 
@@ -298,19 +302,20 @@ async def resume(self, message):
     """
     try:
         if not self.is_voice_connected():
-            await self.send_message(message.channel, '```Please connect to voice channel first```')
+            yield from self.send_message(message.channel, '```Please connect to voice channel first```')
 
         elif self.player.is_playing() == False and self.player.is_done() == False:
-            await self.send_message(message.channel, 'Resumed')
+            yield from self.send_message(message.channel, 'Resumed')
 
             self.player.resume()
 
     except Exception as e:
-        await self.send_message(message.channel,
-                                '```' + str(e) + '```')
+        yield from self.send_message(message.channel,
+                                     '```' + str(e) + '```')
 
 
-async def stop(self, message):
+@asyncio.coroutine
+def stop(self, message):
     """
     This function is called when the player uses `stop` command.
 
@@ -323,22 +328,23 @@ async def stop(self, message):
     """
     try:
         if not self.is_voice_connected():
-            await self.send_message(message.channel, '```Please connect to voice channel first```')
+            yield from self.send_message(message.channel, '```Please connect to voice channel first```')
 
         elif self.player.is_playing() == True and self.player.is_done() == False:
-            await self.send_message(message.channel, 'stopped')
+            yield from self.send_message(message.channel, 'stopped')
 
             now_playing = discord.Game(name='')
-            await self.change_status(game=now_playing, idle=False)
+            yield from self.change_status(game=now_playing, idle=False)
 
             self.player.stop()
 
     except Exception as e:
-        await self.send_message(message.channel,
-                                '```' + str(e) + '```')
+        yield from self.send_message(message.channel,
+                                     '```' + str(e) + '```')
 
 
-async def playlist(self, message):
+@asyncio.coroutine
+def playlist(self, message):
     """
     This function is called when the player uses `playlist` command. The `playlist` command
     currently displays the list of songs inside the `audio_library` folder.
@@ -361,7 +367,7 @@ async def playlist(self, message):
             plistfinal += str(song + ' (code: **' + str(idq) + '**)\n')
             idq += 1
 
-        await self.send_message(message.channel, plistfinal)
+        yield from self.send_message(message.channel, plistfinal)
     except Exception as e:
-        await self.send_message(message.channel,
-                                '```' + str(e) + '```')
+        yield from self.send_message(message.channel,
+                                     '```' + str(e) + '```')
