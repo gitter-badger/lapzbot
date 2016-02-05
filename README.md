@@ -12,6 +12,9 @@ lapzbot is a multi-purpose utility bot that I wrote for my discord server `osu! 
 
 Join my [lapzbothelp Discord Server](https://discord.gg/0lzW6jSQESAO1HSU) to get latest updates/ help/ bugfixes etc on lapzbot.
 
+For the developement version of lapzbot which has a lot of added features, go to
+`https://github.com/lapoozza/lapzbot/tree/flaskdev`
+
 ### How to set it up?
 * Refer to this wiki page :- [How to setup the bot?](https://github.com/lapoozza/lapzbot/wiki/How-to-setup-the-bot%3F)
 
