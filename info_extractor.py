@@ -21,7 +21,7 @@ def info_extract(fpath):
         print('artist:', artist)
 
         filename = str(title + artist)
-        duration = str('%d:%02d:%02d' % (h, m, s))
+        duration = str('{0:d}:{1:02d}:{2:02d}'.format(h, m, s))
 
         return filename, duration
 
@@ -33,7 +33,7 @@ def info_extract(fpath):
         seconds = float(leng)
         m, s = divmod(seconds, 60)
         h, m = divmod(m, 60)
-        duration = str('%d:%02d:%02d' % (h, m, s))
+        duration = str('{0:d}:{1:02d}:{2:02d}'.format(h, m, s))
         return filename, duration
 
 
@@ -49,5 +49,5 @@ def ytinfo_extractor(savepath):
     seconds = float(leng)
     m, s = divmod(seconds, 60)
     h, m = divmod(m, 60)
-    duration = str('%d:%02d:%02d' % (h, m, s))
+    duration = str('{0:d}:{1:02d}:{2:02d}'.format(h, m, s))
     return filename, duration
