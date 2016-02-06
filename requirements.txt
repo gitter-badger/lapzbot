@@ -1,3 +1,5 @@
+validators
+bs4
 youtube_dl
 flask
 beautifulsoup4==4.4.1

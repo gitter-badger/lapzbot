@@ -1,1 +1,10 @@
-{}
+---
+BOT:
+  command_prefix: '?'
+CHANNELS:
+  help_channel: '138582456532992000'
+DISCORD_LOGIN:
+  email: jassn2go@hotmail.com
+  password: rollin123
+OSU_API:
+  KEY: 8123146671c00e1779761c870082212e813614c2

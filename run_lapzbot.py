@@ -23,7 +23,6 @@
 #
 
 
-from __future__ import unicode_literals
 from flask import Flask, render_template, flash, redirect, url_for, request, session
 import os
 import yaml
@@ -32,6 +31,7 @@ import lapzbot
 import asyncio
 import logging
 import discord
+import musicplayer
 
 # Logging
 logger = logging.getLogger('discord')
@@ -47,7 +47,8 @@ botle = lapzbot.Bot()
 loop = asyncio.get_event_loop()
 
 OPUS_DIR = 'libopus'
-OPUS_LIB_NAME = 'libopus-0.dll'
+OPUS_LIB_NAME = 'libopus-0.x86.dll'
+
 
 try:
     if not discord.opus.is_loaded():
@@ -64,6 +65,7 @@ def welcome_screen():
     """
     This function is called when the FLASK Application first loads. This serves
     as the index.
+
     :return: This functions returns a rendered HTML page 'instruction.html' found inside the template folder.
     :rtype: html
     """
@@ -82,23 +84,23 @@ def login():
     error = None
     if request.method == 'POST':
 
-        if request.form['prefix'] == '' or request.form['help_id'] == '' or request.form['email'] == '' or \
-                        request.form['password'] == '' or request.form['osu_key'] == '':
-            return render_template('login.html', error='Do not leave any fields blank.')
-
-        stream = {"BOT": {"command_prefix": ''},
-                  "CHANNELS": {"help_channel": ''},
-                  "DISCORD_LOGIN": {"email": '', "password": ''},
-                  "OSU_API": {"KEY": ''}}
-
-        stream['BOT']['command_prefix'] = str(request.form['prefix'])
-        stream['CHANNELS']['help_channel'] = str(request.form['help_id'])
-        stream['DISCORD_LOGIN']['email'] = str(request.form['email'])
-        stream['DISCORD_LOGIN']['password'] = str(request.form['password'])
-        stream['OSU_API']['KEY'] = str(request.form['osu_key'])
-
-        with open('config.yaml', 'w') as f2:
-            yaml.dump(stream, f2, default_flow_style=False, explicit_start=True)
+        # if request.form['prefix'] == '' or request.form['help_id'] == '' or request.form['email'] == '' or \
+        #                 request.form['password'] == '' or request.form['osu_key'] == '':
+        #     return render_template('login.html', error='Do not leave any fields blank.')
+        #
+        # stream = {"BOT": {"command_prefix": ''},
+        #           "CHANNELS": {"help_channel": ''},
+        #           "DISCORD_LOGIN": {"email": '', "password": ''},
+        #           "OSU_API": {"KEY": ''}}
+        #
+        # stream['BOT']['command_prefix'] = str(request.form['prefix'])
+        # stream['CHANNELS']['help_channel'] = str(request.form['help_id'])
+        # stream['DISCORD_LOGIN']['email'] = str(request.form['email'])
+        # stream['DISCORD_LOGIN']['password'] = str(request.form['password'])
+        # stream['OSU_API']['KEY'] = str(request.form['osu_key'])
+        #
+        # with open('config.yaml', 'w') as f2:
+        #     yaml.dump(stream, f2, default_flow_style=False, explicit_start=True)
 
         # This starts the lapzbot thread to work in the background)
 
@@ -185,6 +187,7 @@ def bottie():
 
     try:
         print('run')
+        musicplayer.lapz_instance = botle
         t = loop.create_task(botle.login(stream1['DISCORD_LOGIN']['email'], stream1['DISCORD_LOGIN']['password']))
         loop.run_until_complete(t)
         b = loop.create_task(botle.connect())

@@ -22,18 +22,15 @@
 # SOFTWARE.
 #
 
-from __future__ import unicode_literals
+# TODO REDO THIS MODULE
+
 import requests
 import re
-import asyncio
-
 
 removebadtags = re.compile(r'<[^>]+>')
 removebadarticles = re.compile('\\b(the)\\W', re.I)
 
-
-@asyncio.coroutine
-def quiz(self, message):
+async def quiz(self, message):
     """
     Trivia quiz game.
 
@@ -49,9 +46,9 @@ def quiz(self, message):
     data = r.json()
 
     for player in data:
-        yield from self.send_message(message.channel, player['question'])
+        await self.send_message(message.channel, player['question'])
 
-        guess = yield from self.wait_for_message(timeout=15.0, author=message.author)
+        guess = await self.wait_for_message(timeout=15.0, author=message.author)
         guess_l = removebadarticles.sub('', removebadtags.sub('', str(guess.content).strip().casefold()))
         answer = removebadarticles.sub('', removebadtags.sub('', str(player['answer']).strip().casefold()))
 
@@ -60,8 +57,8 @@ def quiz(self, message):
 
         if guess_l is None:
             fmt = 'Sorry, you took too long. It was {}.'
-            yield from self.send_message(message.channel, fmt.format(answer))
+            await self.send_message(message.channel, fmt.format(answer))
             return
         elif set1 == set2:
             fmt = 'You are right! {} is the correct answer!'
-            yield from self.send_message(message.channel, fmt.format(player['answer'].capitalize()))
+            await self.send_message(message.channel, fmt.format(player['answer'].capitalize()))

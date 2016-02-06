@@ -194,6 +194,11 @@ $RECYCLE.BIN/
 
 __pycache__/
 
+_build/
+
+make.bat
+Makefile
+
 # Packages
 *.egg
 *.egg-info

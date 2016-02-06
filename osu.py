@@ -23,11 +23,9 @@
 #
 
 
-from __future__ import unicode_literals
 import requests
 import time
 import bs4
-import asyncio
 
 
 def stats(instring, keystring):
