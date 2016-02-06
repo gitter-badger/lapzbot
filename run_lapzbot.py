@@ -84,23 +84,23 @@ def login():
     error = None
     if request.method == 'POST':
 
-        # if request.form['prefix'] == '' or request.form['help_id'] == '' or request.form['email'] == '' or \
-        #                 request.form['password'] == '' or request.form['osu_key'] == '':
-        #     return render_template('login.html', error='Do not leave any fields blank.')
-        #
-        # stream = {"BOT": {"command_prefix": ''},
-        #           "CHANNELS": {"help_channel": ''},
-        #           "DISCORD_LOGIN": {"email": '', "password": ''},
-        #           "OSU_API": {"KEY": ''}}
-        #
-        # stream['BOT']['command_prefix'] = str(request.form['prefix'])
-        # stream['CHANNELS']['help_channel'] = str(request.form['help_id'])
-        # stream['DISCORD_LOGIN']['email'] = str(request.form['email'])
-        # stream['DISCORD_LOGIN']['password'] = str(request.form['password'])
-        # stream['OSU_API']['KEY'] = str(request.form['osu_key'])
-        #
-        # with open('config.yaml', 'w') as f2:
-        #     yaml.dump(stream, f2, default_flow_style=False, explicit_start=True)
+        if request.form['prefix'] == '' or request.form['help_id'] == '' or request.form['email'] == '' or \
+                        request.form['password'] == '' or request.form['osu_key'] == '':
+            return render_template('login.html', error='Do not leave any fields blank.')
+
+        stream = {"BOT": {"command_prefix": ''},
+                  "CHANNELS": {"help_channel": ''},
+                  "DISCORD_LOGIN": {"email": '', "password": ''},
+                  "OSU_API": {"KEY": ''}}
+
+        stream['BOT']['command_prefix'] = str(request.form['prefix'])
+        stream['CHANNELS']['help_channel'] = str(request.form['help_id'])
+        stream['DISCORD_LOGIN']['email'] = str(request.form['email'])
+        stream['DISCORD_LOGIN']['password'] = str(request.form['password'])
+        stream['OSU_API']['KEY'] = str(request.form['osu_key'])
+
+        with open('config.yaml', 'w') as f2:
+            yaml.dump(stream, f2, default_flow_style=False, explicit_start=True)
 
         # This starts the lapzbot thread to work in the background)
 
