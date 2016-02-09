@@ -8,6 +8,8 @@
 [<img align="right" title="Art by Supergiant Games" src="http://www.distilnetworks.com/wp-content/themes/distil/images/fraud-bot.png">](http://www.distilnetworks.com/wp-content/themes/distil/images/fraud-bot.png)
 [[Official Help and Announcements Server]](https://discord.gg/0lzW6jSQESAO1HSU)
 ### What is lapzbot?
+
+[![Join the chat at https://gitter.im/lapoozza/lapzbot](https://badges.gitter.im/lapoozza/lapzbot.svg)](https://gitter.im/lapoozza/lapzbot?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 lapzbot is a multi-purpose utility bot that I wrote for my discord server `osu! India`. Its a nifty little utility bot. Some of its features include :
 * Playing music- both local files and online songs
 * Fun games- Number guess, Trivia quiz, 8ball
